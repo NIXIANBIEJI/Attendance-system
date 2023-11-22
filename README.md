@@ -9,7 +9,7 @@
 1. 前端技术：Jquery、Thymeleaf、HTML5、JavaScript、CSS。
 2. 后端技术：Mybatis、SpringBoot、SpringMVC。
 
-### 说明
+## 说明
 
 项目使用的jdk版本为 **JDK1.8** ，数据库为 **MySQL-5.x** 。
 

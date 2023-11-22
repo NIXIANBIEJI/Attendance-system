@@ -1,213 +1,177 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<title>考勤系统</title>
-	</head>
-	<style>
-		/*设置底色*/
-	*{
-		margin: 0;
-		padding: 0;
-		font-size: 黑体;
-		box-sizing: border-box;
-	}
-	body{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		min-height: 100vh;
-		background: #222;
-	}
-	/*设置登录盒子的大小和底色*/
-	.box{
-		position:relative;
-		width: 380px;
-		height: 420px;
-		background: #1c1c1c;
-		border-radius: 8px;
-	}
-	/*开启flex布局，换轴*/
-	.box form{
-		position:absolute;
-		inset:4px;
-		background: #222;
-		padding: 50px 40px;
-		border-radius: 8px;
-		z-index: 2;
-		display: flex;
-		flex-direction: column;
-	}
-	/*标题文字样式，输入框盒子大小间距*/
-	.box form h2{
-		color: #fff;
-		font-weight: 500;
-		text-align: center;
-		letter-spacing: 0.lem;
-	}
-	.box form .inputBox{
-		position: relative;
-		width: 300px;
-		margin-top: 35px;
-	}
-	/*调整输入框样式*/
-	.box form .inputBox input{
-		position: relative;
-		width: 100%;
-		padding: 20px 10px 10px;
-		background: transparent;
-		outline: none;
-		border: none;
-		box-shadow: none;
-		color: #23242;
-		font-size: 1em;
-		letter-spacing: 0.05em;
-		z-index: 10;
-	}
-	/*提示文字样式*/
-	.box form .inputBox span{
-		position: absolute;
-		left: 0;
-		padding: 20px 0px 10px;
-		pointer-events: none;
-		color: #8f8f8f;
-		font-size: 1em;
-		letter-spacing: 0.05em;
-	}
-	/*输入有效值获取焦点时样式*/
-	.box form .inputBox input{
-		transition: 0.5s;
-	}
-	.box form .inputBox span{
-		transition: 0.5s;
-	}
-	.box form .inputBox input:valid~span,
-	.box form .inputBox input:focus~span{
-		color: #fff;
-		font-size: 0.75em;
-		transform: translateY(-34px);
-	}
-	/*设置白色下划线，并设置点击穿透*/
-	.box form .inputBox i{
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		width: 100%;
-		height: 2px;
-		background: #fff;
-		border-radius: 4px;
-		overflow: hidden;
-		transition: 0.5s;
-		pointer-events: none;
-	}
-	/*输入有效值获取焦点时样式*/
-	.box form .inputBox input:valid~i,
-	.box form .inputBox input:focus~i{
-		height: 44px;
-	}
-	/*开启flex a链接样式*/
-	.box form .links{
-		display: flex;
-		justify-content: space-between;
-	}
-	.box form .links a{
-		margin: 10px 0;
-		font-size: 0.75em;
-		color: #8f8f8f;
-		text-decoration: none;
-	}
-	/*a链接hover时改颜色，注册直接改颜色*/
-	.box form .links a:hover,
-	.box form .links a:nth-child(2){
-		color: #fff;
-	}
-	/*修改登录按钮样式*/
-	.box form input[type="submit"]{
-		border: none;
-		outline: none;
-		padding: 9px 25px;
-		background: #fff;
-		cursor: pointer;
-		font-size: 0.9em;
-		border-radius: 4px;
-		font-weight: 600;
-		width: 100px;
-		margin-top: 10px;
-	}
-	/*登录按钮点击时，透明度80%*/
-	.box form input[type="submit"]:active{
-		opacity: 0.8;
-	}
-	/*写动画*/
-	.borderLine{
-		position: absolute;
-		top:0;
-		inset:0;
-	}
-	@keyframes animate{
-		0%{
-			transform: rotate(0deg);
-		}
-		100%{
-			transform: rotate(360deg);
-		}
-	}
-	/*添加动画*/
-	.box::before,
-	.box::after,
-	.borderLine::before,
-	.borderLine::after{
-		content: "";
-		position: absolute;
-		top:-50%;
-		width: 380px;
-		height: 420px;
-		background:linear-gradient(
-		0deg,transparent,transparent,
-		#45f3ff,#45f3ff,#45f3ff);
-		z-index: 1;
-		transform-origin: bottom right;
-		animation: animate 6s linear infinite;
-	}
-	/*添加动画延迟，修改为两种颜色*/
-	.box::after{
-		animation-delay: -3s;
-	}
-	.borderLine::before{
-		background: linear-gradient(
-		0deg,transparent,transparent,
-		#ff2770,#ff2770,#ff2770);
-		animation-delay: -1.5s;
-	}
-	.borderLine::after{
-		background: linear-gradient(
-		0deg,transparent,transparent,
-		#ff2770,#ff2770,#ff2770);
-		animation-delay: -4.5s;
-	}
-	/*退出隐藏*/
-	.box{
-		overflow: hidden;
-	}
-	</style>
-	<body>
-		<div class="box">
-			<span class="borderLine"></span>
-			<form>
-				<h2>登录</h2>
-				<div class="inputBox">
-					<input type="text" required="required" />
-					<span>账号：</span><i></i>
+<!doctype html>
+<html lang="zh">
+<head>
+	<link rel="stylesheet" type="text/css" href="../static/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="../static/css/htmleaf-demo.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/login_styles.css">
+	<link  rel="shortcut icon" href="/static/img/favicon.ico">
+</head>
+<script src="/static/js/jquery-1.11.2.min.js"></script>
+<script src="/static/js/layer.js"></script>
+<script src="/static/js/jquery.gradientify.js"></script>
+<body>
+	<div class="htmleaf-container">
+
+		<div class="login-wrap in-center">
+			<div class="login-html ">
+				<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">登录</label>
+				<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">注册</label>
+				<div class="login-form">
+					<div class="sign-in-htm">
+						<div class="group">
+							<label for="user" class="label">账号</label>
+							<input id="user" type="text" class="input">
+						</div>
+						<div class="group">
+							<label for="pass" class="label">密码</label>
+							<input id="pass" type="password" class="input" data-type="password">
+						</div>
+					
+						<div class="group">
+							<br>
+							<input type="submit" id="login" class="button" value="登录">
+						</div>
+						<div class="hr"></div>
+						<div class="foot-lnk">
+							<a href="/" style="color: #6b708d">欢迎使用XXX学校学生考勤系统</a>
+						</div>
+					</div>
+					<div class="sign-up-htm">
+						<div class="group">
+							<label for="user" class="label">账号(学号)</label>
+							<input id="reg_user" type="text" class="input">
+						</div>
+						<div class="group">
+							<label for="pass" class="label">密码</label>
+							<input id="reg_pass" type="password" class="input" data-type="password">
+						</div>
+						<div class="group">
+							<label for="pass" class="label">手机号</label>
+							<input id="reg_iphone" type="text" class="input">
+						</div>
+						<div class="radio">
+							<input id="r1" type="radio" class = "radio1" name="radio" value="2" checked>
+							<label for="r1" class="stu-radio">学生</label>
+							<input id="r2" type="radio" class = "radio2" name="radio" value="1" >
+							<label for="r2" class="tch-radio">老师</label>
+						</div>
+						<div class="group">
+							<br>
+							<input type="submit" class="reg_button" id="reg" value="注册">
+						</div>
+						<div class="reg-hr"></div>
+							<div class="foot-lnk">
+							<a href="/" style="color: #6b708d">欢迎使用XXX学校学生考勤系统</a>
+						</div>
+					</div>
 				</div>
-				<div class="inputBox">
-					<input type="password" required="required" />
-					<span>密码：</span><i></i>
-				</div>
-				<div class="links">
-					<a href="#">忘记密码</a><a href="#">注册</a>
-				</div>
-				<input type="submit" value="登录">
-			</form>
+			</div>
 		</div>
-	</body>
+	</div>
+	
+</body>
 </html>
+<script>
+	$(document).ready(function() {
+		$("body").gradientify({
+			gradients: [
+				{ start: [255,236,210], stop: [252,182,159] },
+				{ start: [238,162,162], stop: [122,197,216] },
+				{ start: [159,172,230], stop: [116,235,213] },
+				{ start: [101,153,153], stop: [244,121,31]  },
+				{ start: [247,183,51] , stop: [255,94,98]   },
+				{ start: [255,94,98]  , stop: [225,238,195] }
+
+			],
+			transition_time:3
+		});
+	});
+
+	$("#login").click(function(){
+		let user = $("#user").val();
+		let pass = $("#pass").val();
+		if (!user){
+			return layer.msg('请输入账号');
+		}
+		if(!pass){
+			return layer.msg('请输入密码');
+		}
+		$.ajax({
+			url:'/user/login',
+			data:JSON.stringify({
+				userAccount:user,
+				userPw: pass,
+			}),
+			type:"post",
+			contentType:"application/json",
+			success:function(data){
+				if(data == 'true'){
+					layer.msg('操作成功~');
+					setTimeout(function(){
+						window.location.href = "/index/systemIndex";
+					},1000)
+				}else if(data == 'true-admin'){
+					layer.msg('操作成功~');
+					setTimeout(function(){
+						window.location.href = "/index/userIndex";
+					},1000)
+				}else if(data == 'false-account'){
+					layer.msg('用户名错误~');
+				}else if(data == 'false-pw'){
+					layer.msg('密码错误~');
+				}else{
+					layer.msg('错误~');
+				}
+
+			}
+		})
+
+	})
+
+	$("#reg").click(function(){
+
+		let user = $("#reg_user").val();
+		let pass = $("#reg_pass").val();
+		let iphone = $("#reg_iphone").val();
+		let lv = $("input[name = 'radio']:checked").val();
+		let reg = /^[0-9]{11}$/;
+
+		if (!user){
+			return layer.msg('请输入账号');
+		}
+		if(!pass){
+			return layer.msg('请输入密码');
+		}
+		if (pass.length>30){
+			return layer.msg('密码过长');
+		}
+		if((!reg.test(iphone))&&iphone!=""){
+			return layer.msg('请输入正确手机号');
+		}
+		$.ajax({
+			url:'/user/userRegister',
+			data:JSON.stringify({
+				userAccount:user,
+				userPw: pass,
+				iphone:iphone,
+				userLv:lv
+			}),
+			type:"post",
+			contentType:"application/json",
+			success:function(data){
+				if(data == 'true'){
+					layer.msg('操作成功~');
+					setTimeout(function(){
+						window.location.href = "/";
+					},1000)
+				}else if(data == 'false-has-double'){
+					layer.msg('重名~');
+				}else{
+					layer.msg('操作失败~');
+				}
+
+			}
+		})
+
+	})
+</script>
